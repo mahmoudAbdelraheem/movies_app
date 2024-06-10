@@ -15,6 +15,8 @@ class PopularWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MoviesBloc, MoviesStates>(
+      buildWhen: (previous, current) =>
+          previous.popularRequestState != current.popularRequestState,
       builder: (context, state) {
         switch (state.popularRequestState) {
           case RequestState.loading:

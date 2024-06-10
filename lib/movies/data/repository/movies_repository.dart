@@ -2,8 +2,10 @@ import 'package:dartz/dartz.dart';
 import 'package:movies_app/core/errors/exceptions.dart';
 import 'package:movies_app/core/errors/failure.dart';
 import 'package:movies_app/movies/data/datasource/movies_remote_data_source.dart';
+import 'package:movies_app/movies/domain/entities/movie_details_entity.dart';
 import 'package:movies_app/movies/domain/entities/movie_entity.dart';
 import 'package:movies_app/movies/domain/repository/base_movies_repository.dart';
+import 'package:movies_app/movies/domain/usecases/get_movie_details_usecase.dart';
 
 class MoviesRepository extends BaseMoviesRepository {
   final BaseMoviesRemoteDataSource baseMoviesRemoteDataSource;
@@ -36,5 +38,12 @@ class MoviesRepository extends BaseMoviesRepository {
   @override
   Future<Either<Failure, List<MovieEntity>>> getTopRatedMovies() async {
     return await _getMovies(baseMoviesRemoteDataSource.getTopRatedMovies);
+  }
+
+  @override
+  Future<Either<Failure, MovieDetailsEntity>> getMovieDetails(
+      {required MovieDetailsParametar parameters}) async {
+    // TODO: implement getMovieDetails
+    throw UnimplementedError();
   }
 }
