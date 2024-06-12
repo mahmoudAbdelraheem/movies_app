@@ -58,9 +58,9 @@ class MoviesRemoteDataSource implements BaseMoviesRemoteDataSource {
     final Response<dynamic> response =
         await dio.get(ApisConfig.recommendationUrl(parametar.movieID));
     if (response.statusCode == 200) {
-      List<RecommendationModel> movies = []; 
+      List<RecommendationModel> movies = [];
       List<dynamic> responseList = response.data['results'];
-      movies.addAll(responseList.map((movie)=> RecommendationModel.fromJson(movie),),);
+      movies.addAll(responseList.map((movie) => RecommendationModel.fromJson(movie)));
       return movies;
     } else {
       throw ServerException(

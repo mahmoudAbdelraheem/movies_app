@@ -10,7 +10,7 @@ class RecommendationModel extends RecommendationEntity {
   factory RecommendationModel.fromJson(Map<String, dynamic> json) =>
       RecommendationModel(
         backdropPath: json['backdrop_path'],
-        id: json['title'],
-        title: json['id'],
+        id: json['id'],
+        title: json['title'],
       );
 }

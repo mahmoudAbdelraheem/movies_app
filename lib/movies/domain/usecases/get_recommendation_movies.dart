@@ -7,10 +7,10 @@ import 'package:movies_app/core/use_case/base_usecase.dart';
 import 'package:movies_app/movies/domain/entities/recommendation_entity.dart';
 import 'package:movies_app/movies/domain/repository/base_movies_repository.dart';
 
-class GetRecommendationMovies extends BaseUseCase<List<RecommendationEntity>,RecommendationParameters>{
+class GetRecommendationMoviesUseCase extends BaseUseCase<List<RecommendationEntity>,RecommendationParameters>{
   final BaseMoviesRepository baseMoviesRepository;
 
-  GetRecommendationMovies({required this.baseMoviesRepository});
+  GetRecommendationMoviesUseCase({required this.baseMoviesRepository});
   @override
   Future<Either<Failure, List<RecommendationEntity>>> call(RecommendationParameters parameters) async{
     return await baseMoviesRepository.getRecommendationMovies(parameters: parameters);

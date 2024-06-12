@@ -9,7 +9,7 @@ class MovieDetailsEntity extends Equatable {
   final String releaseDate;
   final int runTime;
   final String title;
-  final String voteAvarage;
+  final double voteAvarage;
 
   const MovieDetailsEntity({
     required this.backdropPath,
