@@ -1,7 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-
 import 'package:movies_app/core/errors/failure.dart';
 import 'package:movies_app/core/use_case/base_usecase.dart';
 import 'package:movies_app/movies/domain/entities/movie_details_entity.dart';

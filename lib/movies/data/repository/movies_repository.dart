@@ -4,8 +4,10 @@ import 'package:movies_app/core/errors/failure.dart';
 import 'package:movies_app/movies/data/datasource/movies_remote_data_source.dart';
 import 'package:movies_app/movies/domain/entities/movie_details_entity.dart';
 import 'package:movies_app/movies/domain/entities/movie_entity.dart';
+import 'package:movies_app/movies/domain/entities/recommendation_entity.dart';
 import 'package:movies_app/movies/domain/repository/base_movies_repository.dart';
 import 'package:movies_app/movies/domain/usecases/get_movie_details_usecase.dart';
+import 'package:movies_app/movies/domain/usecases/get_recommendation_movies.dart';
 
 class MoviesRepository extends BaseMoviesRepository {
   final BaseMoviesRemoteDataSource baseMoviesRemoteDataSource;
@@ -40,12 +42,9 @@ class MoviesRepository extends BaseMoviesRepository {
     return await _getMovies(baseMoviesRemoteDataSource.getTopRatedMovies);
   }
 
-  @override
-  Future<Either<Failure, MovieDetailsEntity>> getMovieDetails(
-      {required MovieDetailsParametar parameters}) async {
+Future<Either<Failure, T>> _execute<T>(Future<T> Function() action) async {
     try {
-      final result =
-          await baseMoviesRemoteDataSource.getMovieDetails(parameters);
+      final result = await action();
       return Right(result);
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.errorMessageModel.message));
@@ -53,4 +52,19 @@ class MoviesRepository extends BaseMoviesRepository {
       return Left(GeneralFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, MovieDetailsEntity>> getMovieDetails(
+      {required MovieDetailsParametar parameters}) {
+    return _execute(
+        () => baseMoviesRemoteDataSource.getMovieDetails(parameters));
+  }
+
+  @override
+  Future<Either<Failure, List<RecommendationEntity>>> getRecommendationMovies(
+      {required RecommendationParameters parameters}) {
+    return _execute(
+        () => baseMoviesRemoteDataSource.getRecommendationMovies(parameters));
+  }
+
 }
