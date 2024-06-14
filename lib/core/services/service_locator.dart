@@ -7,7 +7,6 @@ import 'package:movies_app/movies/domain/usecases/get_recommendation_movies.dart
 import 'package:movies_app/movies/domain/usecases/now_playing_movies_usecase.dart';
 import 'package:movies_app/movies/domain/usecases/popular_movies_usecase.dart';
 import 'package:movies_app/movies/domain/usecases/top_rated_movies_usecase.dart';
-import 'package:movies_app/movies/presentation/controller/bloc/movie_details_bloc.dart';
 import 'package:movies_app/movies/presentation/controller/movies_bloc.dart';
 
 //? sl => service locator
@@ -23,12 +22,12 @@ class ServiceLocator {
         topRatedMoviesUsecase: sl(),
       ),
     );
-    sl.registerLazySingleton(
-      () => MovieDetailsBloc(
-        getMovieDetailsUseCase: sl(),
-        getRecommendationMoviesUseCase: sl(),
-      ),
-    );
+    // sl.registerLazySingleton(
+    //   () => MovieDetailsBloc(
+    //     getMovieDetailsUseCase: sl(),
+    //     getRecommendationMoviesUseCase: sl(),
+    //   ),
+    // );
 
     //! USERCASES
     sl.registerLazySingleton(

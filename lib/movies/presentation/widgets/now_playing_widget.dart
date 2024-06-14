@@ -75,7 +75,7 @@ class NowPlayingWidget extends StatelessWidget {
                             blendMode: BlendMode.dstIn,
                             child: CachedNetworkImage(
                               height: 560.0,
-                              imageUrl: ApisConfig.imageUrl(item.backdropPath),
+                              imageUrl: ApisConfig.imageUrl(item.packdropPath),
                               fit: BoxFit.cover,
                             ),
                           ),

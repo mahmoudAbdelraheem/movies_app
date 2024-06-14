@@ -60,7 +60,7 @@ class PopularWidget extends StatelessWidget {
                           child: CachedNetworkImage(
                             width: 120.0,
                             fit: BoxFit.cover,
-                            imageUrl: ApisConfig.imageUrl(movie.backdropPath),
+                            imageUrl: ApisConfig.imageUrl(movie.posterPath),
                             placeholder: (context, url) => Shimmer.fromColors(
                               baseColor: Colors.grey[850]!,
                               highlightColor: Colors.grey[800]!,

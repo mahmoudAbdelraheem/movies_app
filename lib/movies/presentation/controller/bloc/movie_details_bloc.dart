@@ -21,6 +21,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
       GetMovieDetailsEvent event, Emitter<MovieDetailsState> emit) async {
     final result =
         await getMovieDetailsUseCase(MovieDetailsParametar(movieID: event.id));
+
     result.fold(
       (failure) => emit(
         state.copyWith(
@@ -41,6 +42,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
       Emitter<MovieDetailsState> emit) async {
     final result = await getRecommendationMoviesUseCase(
         RecommendationParameters(movieID: event.id));
+    
     result.fold(
       (failure) => emit(
         state.copyWith(

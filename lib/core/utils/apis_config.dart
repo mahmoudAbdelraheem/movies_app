@@ -5,6 +5,7 @@ class ApisConfig {
   //!apis fro movies
   static const nowPlayingMovieUrl =
       "$baseUrl/movie/now_playing?api_key=$apiKey";
+      //? https://api.themoviedb.org/3/movie/popular?api_key=a1f18955374c022f6404ba14b7acd019
   static const popularMovieUrl = "$baseUrl/movie/popular?api_key=$apiKey";
   static const topRatedMovieUrl = "$baseUrl/movie/top_rated?api_key=$apiKey";
 

@@ -8,10 +8,10 @@ import 'package:movies_app/core/utils/apis_config.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/enums.dart';
 import 'package:movies_app/movies/domain/entities/genres_entity.dart';
+import 'package:movies_app/movies/domain/entities/recommendation_entity.dart';
 import 'package:movies_app/movies/presentation/controller/bloc/movie_details_bloc.dart';
 import 'package:movies_app/movies/presentation/controller/bloc/movie_details_event.dart';
 import 'package:movies_app/movies/presentation/controller/bloc/movie_details_state.dart';
-import 'package:movies_app/movies/presentation/screens/dummy.dart';
 import 'package:shimmer/shimmer.dart';
 
 class MovieDetailScreen extends StatelessWidget {
@@ -22,9 +22,12 @@ class MovieDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => sl<MovieDetailsBloc>()
-        ..add(GetMovieDetailsEvent(id: id))
-        ..add(GetRecommendationMovieEevent(id: id)),
+      create: (BuildContext context) => MovieDetailsBloc(
+        getMovieDetailsUseCase: sl(),
+        getRecommendationMoviesUseCase: sl(),
+      )
+        ..add(GetRecommendationMovieEevent(id: id))
+        ..add(GetMovieDetailsEvent(id: id)),
       child: const Scaffold(
         body: MovieDetailContent(),
       ),
@@ -242,11 +245,13 @@ class MovieDetailContent extends StatelessWidget {
 
   Widget _showRecommendations() {
     return BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
+
       builder: (BuildContext context, MovieDetailsState state) {
+        final List<RecommendationEntity> movieRecommendations = state.recommendation;
         return SliverGrid(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
-              final recommendation = state.recommendation[index];
+              final recommendation = movieRecommendations[index];
               return FadeInUp(
                 from: 20,
                 duration: const Duration(milliseconds: 500),
@@ -274,7 +279,7 @@ class MovieDetailContent extends StatelessWidget {
                 ),
               );
             },
-            childCount: recommendationDummy.length,
+            childCount: movieRecommendations.length,
           ),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             mainAxisSpacing: 8.0,
