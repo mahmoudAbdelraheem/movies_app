@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/core/services/service_locator.dart';
-import 'package:movies_app/movies/presentation/controller/bloc/movie_details_bloc.dart';
-import 'package:movies_app/movies/presentation/controller/bloc/movie_details_event.dart';
 import 'package:movies_app/movies/presentation/widgets/movie_details/movie_details_content.dart';
-
 
 class MovieDetailScreen extends StatelessWidget {
   final int id;
@@ -13,14 +8,8 @@ class MovieDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) => MovieDetailsBloc(
-        getMovieDetailsUseCase: sl(),
-        getRecommendationMoviesUseCase: sl(),
-      )
-        ..add(GetRecommendationMovieEevent(id: id))
-        ..add(GetMovieDetailsEvent(id: id)),
-      child: const Scaffold(
+    return const SafeArea(
+      child: Scaffold(
         body: MovieDetailContent(),
       ),
     );
