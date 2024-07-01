@@ -66,7 +66,7 @@ class MovieDateWidget extends StatelessWidget {
                   ),
                   const SizedBox(width: 5),
                   Text(
-                    movie.voteAvarage.toStringAsFixed(1),
+                    (movie.voteAvarage / 2).toStringAsFixed(1),
                     style: const TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w500,
