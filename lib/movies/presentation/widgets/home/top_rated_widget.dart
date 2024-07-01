@@ -3,11 +3,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/utils/apis_config.dart';
-import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/app_constance.dart';
 import 'package:movies_app/core/utils/enums.dart';
 import 'package:movies_app/movies/presentation/controller/movies_bloc.dart';
 import 'package:movies_app/movies/presentation/controller/movies_states.dart';
+import 'package:movies_app/movies/presentation/widgets/custom_loading_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
 class TopRatedWidget extends StatelessWidget {
@@ -23,11 +23,7 @@ class TopRatedWidget extends StatelessWidget {
           case RequestState.loading:
             return const SizedBox(
               height: 170,
-              child: Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.goldColor,
-                ),
-              ),
+              child: CustomLoadingWidget(),
             );
           case RequestState.loaded:
             return FadeIn(

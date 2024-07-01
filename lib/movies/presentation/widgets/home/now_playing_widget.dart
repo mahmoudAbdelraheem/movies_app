@@ -4,11 +4,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/utils/apis_config.dart';
-import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/app_constance.dart';
 import 'package:movies_app/core/utils/enums.dart';
 import 'package:movies_app/movies/presentation/controller/movies_bloc.dart';
 import 'package:movies_app/movies/presentation/controller/movies_states.dart';
+import 'package:movies_app/movies/presentation/widgets/custom_loading_widget.dart';
 
 class NowPlayingWidget extends StatelessWidget {
   const NowPlayingWidget({super.key});
@@ -23,11 +23,7 @@ class NowPlayingWidget extends StatelessWidget {
           case RequestState.loading:
             return const SizedBox(
               height: 400,
-              child: Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.goldColor,
-                ),
-              ),
+              child: CustomLoadingWidget(),
             );
           case RequestState.loaded:
             return FadeIn(
