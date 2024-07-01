@@ -17,7 +17,7 @@ class MoviesApp extends StatelessWidget {
       title: 'Movies App using BloC',
       debugShowCheckedModeBanner: false,
       theme: appTheme,
-      onGenerateRoute: (setting)=> generateRoute(setting),
+      onGenerateRoute: (setting) => generateRoute(setting),
     );
   }
 }
