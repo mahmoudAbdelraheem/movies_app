@@ -4,12 +4,12 @@ import 'package:movies_app/auth/domain/repository/base_auth_repository.dart';
 import 'package:movies_app/core/errors/failure.dart';
 import 'package:movies_app/core/use_case/base_usecase.dart';
 
-class LoginUsecase extends BaseUseCase<UserEntity, AuthParameter> {
+class SignupUsecase extends BaseUseCase<void, AuthParameter> {
   final BaseAuthRepository baseAuthRepository;
 
-  LoginUsecase({required this.baseAuthRepository});
+  SignupUsecase({required this.baseAuthRepository});
 
   Future<Either<Failure, UserEntity>> call(AuthParameter parameters)async{
-    return await baseAuthRepository.signIn(parameters);
+    return await baseAuthRepository.signUp(parameters);
   }
 }

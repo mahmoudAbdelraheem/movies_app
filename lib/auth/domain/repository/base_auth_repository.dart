@@ -9,7 +9,7 @@ abstract class BaseAuthRepository {
   //? sign up
   Future<Either<Failure, UserEntity>> signUp(AuthParameter parameters);
   //? sign out
-  Future<Either<Failure, UserEntity>> signOut();
+  Future<Either<Failure, void>> signOut();
   //? get current user data
   Future<Either<Failure, UserEntity>> getCurrentUser();
 
