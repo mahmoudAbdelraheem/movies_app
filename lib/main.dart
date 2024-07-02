@@ -3,8 +3,9 @@ import 'package:movies_app/core/services/service_locator.dart';
 import 'package:movies_app/core/utils/app_theme.dart';
 import 'package:movies_app/router.dart';
 
-void main() {
-  ServiceLocator().init();
+Future<void> main()  async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await ServiceLocator().init();
   runApp(const MoviesApp());
 }
 

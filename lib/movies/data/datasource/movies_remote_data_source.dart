@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:movies_app/core/errors/exceptions.dart';
 import 'package:movies_app/core/network/error_message_model.dart';
+import 'package:movies_app/core/use_case/base_usecase.dart';
 import 'package:movies_app/core/utils/apis_config.dart';
 import 'package:movies_app/movies/data/models/movie_details_model.dart';
 import 'package:movies_app/movies/data/models/movie_model.dart';
 import 'package:movies_app/movies/data/models/recommendation_model.dart';
-import 'package:movies_app/movies/domain/usecases/get_movie_details_usecase.dart';
 import 'package:movies_app/movies/domain/usecases/get_recommendation_movies.dart';
 
 abstract class BaseMoviesRemoteDataSource {

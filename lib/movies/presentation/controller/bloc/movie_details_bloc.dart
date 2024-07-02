@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/core/use_case/base_usecase.dart';
 import 'package:movies_app/core/utils/enums.dart';
 import 'package:movies_app/movies/domain/usecases/get_movie_details_usecase.dart';
 import 'package:movies_app/movies/domain/usecases/get_recommendation_movies.dart';

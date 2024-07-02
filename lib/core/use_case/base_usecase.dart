@@ -12,3 +12,20 @@ class NoParameters extends Equatable{
   List<Object?> get props => [];
   
 }
+
+
+class MovieDetailsParametar extends Equatable {
+  final int movieID;
+  const MovieDetailsParametar({required this.movieID});
+  @override
+  List<Object> get props => [movieID];
+}
+
+//? use for user auth parameters with email and password
+class AuthParameter extends Equatable {
+  final String email;
+  final String password;
+  const AuthParameter({required this.email, required this.password});
+  @override
+  List<Object> get props => [email, password];
+}

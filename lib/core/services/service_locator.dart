@@ -1,4 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
+import 'package:movies_app/firebase_options.dart';
 import 'package:movies_app/movies/data/datasource/movies_remote_data_source.dart';
 import 'package:movies_app/movies/data/repository/movies_repository.dart';
 import 'package:movies_app/movies/domain/repository/base_movies_repository.dart';
@@ -13,7 +15,17 @@ import 'package:movies_app/movies/presentation/controller/movies_bloc.dart';
 final sl = GetIt.instance;
 
 class ServiceLocator {
-  void init() {
+  Future<void>  init() async {
+   //! Initialize Firebase
+    try {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    } catch (e) {
+      print("Error initializing Firebase: $e");
+      // Optionally handle the error further, e.g., show a user-friendly message or retry.
+    }
+
     //! my Bloc
     sl.registerLazySingleton(
       () => MoviesBloc(
@@ -22,12 +34,6 @@ class ServiceLocator {
         topRatedMoviesUsecase: sl(),
       ),
     );
-    // sl.registerLazySingleton(
-    //   () => MovieDetailsBloc(
-    //     getMovieDetailsUseCase: sl(),
-    //     getRecommendationMoviesUseCase: sl(),
-    //   ),
-    // );
 
     //! USERCASES
     sl.registerLazySingleton(

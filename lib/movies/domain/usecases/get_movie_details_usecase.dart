@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
 import 'package:movies_app/core/errors/failure.dart';
 import 'package:movies_app/core/use_case/base_usecase.dart';
 import 'package:movies_app/movies/domain/entities/movie_details_entity.dart';
@@ -15,11 +14,4 @@ class GetMovieDetailsUseCase
       MovieDetailsParametar parameters) async {
     return await baseMoviesRepository.getMovieDetails(parameters: parameters);
   }
-}
-
-class MovieDetailsParametar extends Equatable {
-  final int movieID;
-  const MovieDetailsParametar({required this.movieID});
-  @override
-  List<Object> get props => [movieID];
 }

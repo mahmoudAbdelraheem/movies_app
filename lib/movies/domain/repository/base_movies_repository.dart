@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:movies_app/core/errors/failure.dart';
+import 'package:movies_app/core/use_case/base_usecase.dart';
 import 'package:movies_app/movies/domain/entities/movie_details_entity.dart';
 import 'package:movies_app/movies/domain/entities/movie_entity.dart';
 import 'package:movies_app/movies/domain/entities/recommendation_entity.dart';
-import 'package:movies_app/movies/domain/usecases/get_movie_details_usecase.dart';
 import 'package:movies_app/movies/domain/usecases/get_recommendation_movies.dart';
 
 abstract class BaseMoviesRepository {
