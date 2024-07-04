@@ -3,6 +3,7 @@ class ApisConfig {
   static const String apiKey = "a1f18955374c022f6404ba14b7acd019";
 
   //!apis fro movies
+  //? https://api.themoviedb.org/3/movie/now_playing?api_key=a1f18955374c022f6404ba14b7acd019
   static const nowPlayingMovieUrl =
       "$baseUrl/movie/now_playing?api_key=$apiKey";
   //? https://api.themoviedb.org/3/movie/popular?api_key=a1f18955374c022f6404ba14b7acd019

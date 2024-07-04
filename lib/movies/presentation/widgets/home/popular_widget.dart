@@ -7,7 +7,7 @@ import 'package:movies_app/core/utils/app_constance.dart';
 import 'package:movies_app/core/utils/enums.dart';
 import 'package:movies_app/movies/presentation/controller/movies_bloc.dart';
 import 'package:movies_app/movies/presentation/controller/movies_states.dart';
-import 'package:movies_app/movies/presentation/widgets/custom_loading_widget.dart';
+import 'package:movies_app/core/shared/custom_loading_widget.dart';
 
 import 'package:shimmer/shimmer.dart';
 
@@ -55,7 +55,7 @@ class PopularWidget extends StatelessWidget {
                           child: CachedNetworkImage(
                             width: 120.0,
                             fit: BoxFit.cover,
-                            imageUrl: ApisConfig.imageUrl(movie.posterPath),
+                            imageUrl: ApisConfig.imageUrl(movie.posterPath!),
                             placeholder: (context, url) => Shimmer.fromColors(
                               baseColor: Colors.grey[850]!,
                               highlightColor: Colors.grey[800]!,

@@ -8,7 +8,7 @@ import 'package:movies_app/core/utils/app_constance.dart';
 import 'package:movies_app/core/utils/enums.dart';
 import 'package:movies_app/movies/presentation/controller/movies_bloc.dart';
 import 'package:movies_app/movies/presentation/controller/movies_states.dart';
-import 'package:movies_app/movies/presentation/widgets/custom_loading_widget.dart';
+import 'package:movies_app/core/shared/custom_loading_widget.dart';
 
 class NowPlayingWidget extends StatelessWidget {
   const NowPlayingWidget({super.key});
@@ -66,7 +66,7 @@ class NowPlayingWidget extends StatelessWidget {
                             blendMode: BlendMode.dstIn,
                             child: CachedNetworkImage(
                               height: 560.0,
-                              imageUrl: ApisConfig.imageUrl(item.packdropPath),
+                              imageUrl: ApisConfig.imageUrl(item.packdropPath == null ? item.posterPath!:item.packdropPath!),
                               fit: BoxFit.cover,
                             ),
                           ),

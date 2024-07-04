@@ -40,7 +40,7 @@ class MoviesScreen extends StatelessWidget {
                           /// TODO : NAVIGATION TO POPULAR SCREEN
                           Navigator.pushNamed(
                               context, AppConstance.seeMoreScreen, arguments: {
-                            'title': 'POPULAR SCREEN',
+                            'title': 'POPULAR MOVIES',
                             'movies': state.popularMovies
                           });
                         },
@@ -84,7 +84,7 @@ class MoviesScreen extends StatelessWidget {
                           /// TODO : NAVIGATION TO Top Rated Movies Screen
                           Navigator.pushNamed(
                               context, AppConstance.seeMoreScreen, arguments: {
-                            'title': 'Top Rated',
+                            'title': 'TOP RATED MOVIES',
                             'movies': state.topRatedMovies
                           });
                         },

@@ -3,8 +3,8 @@ import 'package:equatable/equatable.dart';
 class MovieEntity extends Equatable {
   final int id;
   final String title;
-  final String posterPath;
-  final String packdropPath;
+  final String? posterPath;
+  final String? packdropPath;
   final List<int> genreIds;
   final String overView;
   final double voteAvarage;
@@ -26,8 +26,8 @@ class MovieEntity extends Equatable {
     return [
       id,
       title,
-      packdropPath,
-      posterPath,
+      packdropPath!,
+      posterPath!,
       genreIds,
       overView,
       voteAvarage,

@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movies_app/core/shared/custom_loading_widget.dart';
 import 'package:movies_app/core/utils/apis_config.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/enums.dart';
@@ -21,11 +22,7 @@ class MovieDetailContent extends StatelessWidget {
       builder: (BuildContext context, MovieDetailsState state) {
         switch (state.movieDetailsRequestState) {
           case RequestState.loading:
-            return const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.goldColor,
-              ),
-            );
+            return CustomLoadingWidget();
           case RequestState.loaded:
             return CustomScrollView(
               key: const Key('movieDetailScrollView'),

@@ -30,7 +30,7 @@ class MovieCardWidget extends StatelessWidget {
           children: [
             const MovieDataBackground(),
             MovieDateWidget(size: size, movie: movie),
-            MovieImage(imagePath: movie.packdropPath),
+            MovieImage(imagePath: movie.packdropPath!),
           ],
         ),
         //? column contain movie title, row(release data , rate), and over view

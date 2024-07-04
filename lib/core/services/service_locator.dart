@@ -1,5 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
+import 'package:movies_app/auth/data/datasource/auth_remote_darasource.dart';
+import 'package:movies_app/auth/data/repository/auth_repository.dart';
+import 'package:movies_app/auth/domain/repository/base_auth_repository.dart';
+import 'package:movies_app/auth/domain/usecases/logout_usecase.dart';
+import 'package:movies_app/auth/domain/usecases/signin_usecse.dart';
+import 'package:movies_app/auth/domain/usecases/signup_usecase.dart';
 import 'package:movies_app/firebase_options.dart';
 import 'package:movies_app/movies/data/datasource/movies_remote_data_source.dart';
 import 'package:movies_app/movies/data/repository/movies_repository.dart';
@@ -15,8 +21,8 @@ import 'package:movies_app/movies/presentation/controller/movies_bloc.dart';
 final sl = GetIt.instance;
 
 class ServiceLocator {
-  Future<void>  init() async {
-   //! Initialize Firebase
+  Future<void> init() async {
+    //! Initialize Firebase
     try {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
@@ -27,6 +33,8 @@ class ServiceLocator {
     }
 
     //! my Bloc
+    
+    //? movies home bloc
     sl.registerLazySingleton(
       () => MoviesBloc(
         nowPlayingMoviesUsecase: sl(),
@@ -36,21 +44,39 @@ class ServiceLocator {
     );
 
     //! USERCASES
+
+    //? auth usecases
+    sl.registerLazySingleton(() => SigninUsecse(baseAuthRepository: sl()));
+    sl.registerLazySingleton(() => SignupUsecase(baseAuthRepository: sl()));
+    sl.registerLazySingleton(() => LogoutUsecase(baseAuthRepository: sl()));
+
+    //? home page usecases
     sl.registerLazySingleton(
         () => NowPlayingMoviesUsecase(baseMoviesRepository: sl()));
     sl.registerLazySingleton(
         () => PopularMoviesUsecase(baseMoviesRepository: sl()));
     sl.registerLazySingleton(
         () => TopRatedMoviesUsecase(baseMoviesRepository: sl()));
+    //? movie details usecase
     sl.registerLazySingleton(
         () => GetMovieDetailsUseCase(baseMoviesRepository: sl()));
     sl.registerLazySingleton(
         () => GetRecommendationMoviesUseCase(baseMoviesRepository: sl()));
+
     //! REPOSITORY
+    //? auth repository
+    sl.registerLazySingleton<BaseAuthRepository>(
+        () => AuthRepository(remoteDataSource: sl()));
+    //? movie repository
     sl.registerLazySingleton<BaseMoviesRepository>(
         () => MoviesRepository(baseMoviesRemoteDataSource: sl()));
 
     //! DATA SOURCE
+    //? auth data source
+    sl.registerLazySingleton<AuthRemoteDarasource>(
+      () => AuthRemoteDatasourceImpl(),
+    );
+    //? movie data source
     sl.registerLazySingleton<BaseMoviesRemoteDataSource>(
         () => MoviesRemoteDataSource());
   }
