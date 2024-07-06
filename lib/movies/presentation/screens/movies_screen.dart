@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies_app/core/utils/app_constance.dart';
-import 'package:movies_app/movies/presentation/controller/movies_bloc.dart';
-import 'package:movies_app/movies/presentation/controller/movies_states.dart';
+import 'package:movies_app/movies/presentation/controller/movies/movies_bloc.dart';
+import 'package:movies_app/movies/presentation/controller/movies/movies_states.dart';
 import 'package:movies_app/movies/presentation/widgets/home/now_playing_widget.dart';
 import 'package:movies_app/movies/presentation/widgets/home/popular_widget.dart';
 import 'package:movies_app/movies/presentation/widgets/home/top_rated_widget.dart';
@@ -14,8 +14,7 @@ class MoviesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: BlocBuilder<MoviesBloc, MoviesStates>(builder: (context, state) {
+      child:  BlocBuilder<MoviesBloc, MoviesStates>(builder: (context, state) {
           return SingleChildScrollView(
             key: const Key('movieScrollView'),
             child: Column(
@@ -110,7 +109,6 @@ class MoviesScreen extends StatelessWidget {
             ),
           );
         }),
-      ),
-    );
+      );
   }
 }

@@ -10,12 +10,15 @@ import 'package:movies_app/firebase_options.dart';
 import 'package:movies_app/movies/data/datasource/movies_remote_data_source.dart';
 import 'package:movies_app/movies/data/repository/movies_repository.dart';
 import 'package:movies_app/movies/domain/repository/base_movies_repository.dart';
+import 'package:movies_app/movies/domain/usecases/get_genres_usecase.dart';
 import 'package:movies_app/movies/domain/usecases/get_movie_details_usecase.dart';
+import 'package:movies_app/movies/domain/usecases/get_movies_by_genres_id.dart';
+import 'package:movies_app/movies/domain/usecases/get_movies_by_search_quary.dart';
 import 'package:movies_app/movies/domain/usecases/get_recommendation_movies.dart';
 import 'package:movies_app/movies/domain/usecases/now_playing_movies_usecase.dart';
 import 'package:movies_app/movies/domain/usecases/popular_movies_usecase.dart';
 import 'package:movies_app/movies/domain/usecases/top_rated_movies_usecase.dart';
-import 'package:movies_app/movies/presentation/controller/movies_bloc.dart';
+import 'package:movies_app/movies/presentation/controller/movies/movies_bloc.dart';
 
 //? sl => service locator
 final sl = GetIt.instance;
@@ -63,6 +66,12 @@ class ServiceLocator {
     sl.registerLazySingleton(
         () => GetRecommendationMoviesUseCase(baseMoviesRepository: sl()));
 
+    //? search usecase
+  sl.registerLazySingleton(
+    ()=> GetGenresUsecase( baseMoviesRepository: sl()),
+  );
+  sl.registerLazySingleton(()=> GetMoviesByGenresIdUsecase(baseMoviesRepository: sl()));
+  sl.registerLazySingleton(()=> GetMoviesBySearchQuaryUsecase(baseMoviesRepository: sl()));
     //! REPOSITORY
     //? auth repository
     sl.registerLazySingleton<BaseAuthRepository>(
@@ -79,5 +88,9 @@ class ServiceLocator {
     //? movie data source
     sl.registerLazySingleton<BaseMoviesRemoteDataSource>(
         () => MoviesRemoteDataSource());
+
+
+        //? search data source
+       
   }
 }

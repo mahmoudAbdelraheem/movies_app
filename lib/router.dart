@@ -5,13 +5,12 @@ import 'package:movies_app/auth/presentation/screens/signin_screen.dart';
 import 'package:movies_app/auth/presentation/screens/signup_screen.dart';
 import 'package:movies_app/core/services/service_locator.dart';
 import 'package:movies_app/core/utils/app_constance.dart';
+import 'package:movies_app/home/cubit/home_cubit.dart';
+import 'package:movies_app/home/home_screen.dart';
 import 'package:movies_app/movies/domain/entities/movie_entity.dart';
-import 'package:movies_app/movies/presentation/controller/bloc/movie_details_bloc.dart';
-import 'package:movies_app/movies/presentation/controller/bloc/movie_details_event.dart';
-import 'package:movies_app/movies/presentation/controller/movies_bloc.dart';
-import 'package:movies_app/movies/presentation/controller/movies_events.dart';
+import 'package:movies_app/movies/presentation/controller/movie_details/movie_details_bloc.dart';
+import 'package:movies_app/movies/presentation/controller/movie_details/movie_details_event.dart';
 import 'package:movies_app/movies/presentation/screens/movie_detail_screen.dart';
-import 'package:movies_app/movies/presentation/screens/movies_screen.dart';
 import 'package:movies_app/movies/presentation/screens/see_more_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -41,19 +40,27 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           child: const SignupScreen(),
         ),
       );
-
-    case AppConstance.movieScreen:
-      //? provide movie bloc on root of movie screen
+    case AppConstance.homeScreen:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (context) => BlocProvider(
-          create: (context) => sl<MoviesBloc>()
-            ..add(GetNowPlayingMoviesEvent())
-            ..add(GetPopularMoviesEvent())
-            ..add(GetTopRatedMoviesEvent()),
-          child: const MoviesScreen(),
+        builder: (_) => BlocProvider(
+          create: (context) => HomeCubit(),
+          child: const HomeScreen(),
         ),
       );
+
+    // case AppConstance.movieScreen:
+    //   //? provide movie bloc on root of movie screen
+    //   return MaterialPageRoute(
+    //     settings: routeSettings,
+    //     builder: (context) => BlocProvider(
+    //       create: (context) => sl<MoviesBloc>()
+    //         ..add(GetNowPlayingMoviesEvent())
+    //         ..add(GetPopularMoviesEvent())
+    //         ..add(GetTopRatedMoviesEvent()),
+    //       child: const MoviesScreen(),
+    //     ),
+    //   );
 
     case AppConstance.movieDetailsScreen:
       int movieID = routeSettings.arguments as int;

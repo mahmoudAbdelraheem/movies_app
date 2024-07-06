@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/utils/apis_config.dart';
 import 'package:movies_app/core/utils/app_constance.dart';
 import 'package:movies_app/core/utils/enums.dart';
-import 'package:movies_app/movies/presentation/controller/movies_bloc.dart';
-import 'package:movies_app/movies/presentation/controller/movies_states.dart';
+import 'package:movies_app/movies/presentation/controller/movies/movies_bloc.dart';
+import 'package:movies_app/movies/presentation/controller/movies/movies_states.dart';
 import 'package:movies_app/core/shared/custom_loading_widget.dart';
 
 class NowPlayingWidget extends StatelessWidget {

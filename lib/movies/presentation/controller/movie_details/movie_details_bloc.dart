@@ -3,8 +3,8 @@ import 'package:movies_app/core/use_case/base_usecase.dart';
 import 'package:movies_app/core/utils/enums.dart';
 import 'package:movies_app/movies/domain/usecases/get_movie_details_usecase.dart';
 import 'package:movies_app/movies/domain/usecases/get_recommendation_movies.dart';
-import 'package:movies_app/movies/presentation/controller/bloc/movie_details_event.dart';
-import 'package:movies_app/movies/presentation/controller/bloc/movie_details_state.dart';
+import 'package:movies_app/movies/presentation/controller/movie_details/movie_details_event.dart';
+import 'package:movies_app/movies/presentation/controller/movie_details/movie_details_state.dart';
 
 class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
   final GetMovieDetailsUseCase getMovieDetailsUseCase;

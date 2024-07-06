@@ -7,8 +7,8 @@ import 'package:movies_app/core/shared/custom_loading_widget.dart';
 import 'package:movies_app/core/utils/apis_config.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/enums.dart';
-import 'package:movies_app/movies/presentation/controller/bloc/movie_details_bloc.dart';
-import 'package:movies_app/movies/presentation/controller/bloc/movie_details_state.dart';
+import 'package:movies_app/movies/presentation/controller/movie_details/movie_details_bloc.dart';
+import 'package:movies_app/movies/presentation/controller/movie_details/movie_details_state.dart';
 import 'package:movies_app/movies/presentation/widgets/movie_details/movie_genres_widget.dart';
 import 'package:movies_app/movies/presentation/widgets/movie_details/recommendation_movies_sliver_grid.dart';
 

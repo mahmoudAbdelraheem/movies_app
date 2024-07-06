@@ -3,6 +3,7 @@ import 'package:movies_app/core/errors/exceptions.dart';
 import 'package:movies_app/core/network/error_message_model.dart';
 import 'package:movies_app/core/use_case/base_usecase.dart';
 import 'package:movies_app/core/utils/apis_config.dart';
+import 'package:movies_app/movies/data/models/genres_model.dart';
 import 'package:movies_app/movies/data/models/movie_details_model.dart';
 import 'package:movies_app/movies/data/models/movie_model.dart';
 import 'package:movies_app/movies/data/models/recommendation_model.dart';
@@ -16,6 +17,16 @@ abstract class BaseMoviesRemoteDataSource {
       MovieDetailsParametar movieParametar);
   Future<List<RecommendationModel>> getRecommendationMovies(
       RecommendationParameters parametar);
+
+  //? get genres
+  Future<List<GenresModel>> getGenres();
+
+  //? get movies by genre id
+  Future<List<MovieModel>> getMoviesByGenreId({required String genreId});
+
+  //? get movies by search query
+  Future<List<MovieModel>> getMoviesBySearchQuery({required String query});
+  
 }
 
 class MoviesRemoteDataSource implements BaseMoviesRemoteDataSource {
@@ -60,8 +71,26 @@ class MoviesRemoteDataSource implements BaseMoviesRemoteDataSource {
     if (response.statusCode == 200) {
       List<RecommendationModel> movies = [];
       List<dynamic> responseList = response.data['results'];
-      movies.addAll(responseList.map((movie) => RecommendationModel.fromJson(movie)));
+      movies.addAll(
+          responseList.map((movie) => RecommendationModel.fromJson(movie)));
       return movies;
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel.fromJson(response.data),
+      );
+    }
+  }
+
+//? get genres as a list and return it
+  @override
+  Future<List<GenresModel>> getGenres() async{
+    final Dio dio = Dio();
+    final Response<dynamic> response = await dio.get(ApisConfig.genresUrl);
+    if (response.statusCode == 200) {
+      List<GenresModel> genres = [];
+      List<dynamic> responseList = response.data['genres'];
+      genres.addAll(responseList.map((genre) => GenresModel.fromJson(genre)));
+      return genres;
     } else {
       throw ServerException(
         errorMessageModel: ErrorMessageModel.fromJson(response.data),
@@ -83,5 +112,15 @@ class MoviesRemoteDataSource implements BaseMoviesRemoteDataSource {
         errorMessageModel: ErrorMessageModel.fromJson(response.data),
       );
     }
+  }
+  
+  @override
+  Future<List<MovieModel>> getMoviesByGenreId({required String genreId}) {
+   return _fetchMovies(ApisConfig.getMoviesByGenreIdUrl(genreId));
+  }
+  
+  @override
+  Future<List<MovieModel>> getMoviesBySearchQuery({required String query}) {
+    return _fetchMovies(ApisConfig.getMoviesBySearchQueryUrl(query));
   }
 }

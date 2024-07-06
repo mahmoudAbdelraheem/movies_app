@@ -23,7 +23,7 @@ class MoviesApp extends StatelessWidget {
       onGenerateRoute: (setting) => generateRoute(setting),
       initialRoute: FirebaseAuth.instance.currentUser == null
           ? AppConstance.loginScreen
-          : AppConstance.movieScreen,
+          : AppConstance.homeScreen,
     );
   }
 }

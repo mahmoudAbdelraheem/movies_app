@@ -3,6 +3,7 @@ import 'package:movies_app/core/errors/exceptions.dart';
 import 'package:movies_app/core/errors/failure.dart';
 import 'package:movies_app/core/use_case/base_usecase.dart';
 import 'package:movies_app/movies/data/datasource/movies_remote_data_source.dart';
+import 'package:movies_app/movies/domain/entities/genres_entity.dart';
 import 'package:movies_app/movies/domain/entities/movie_details_entity.dart';
 import 'package:movies_app/movies/domain/entities/movie_entity.dart';
 import 'package:movies_app/movies/domain/entities/recommendation_entity.dart';
@@ -65,6 +66,31 @@ Future<Either<Failure, T>> _execute<T>(Future<T> Function() action) async {
       {required RecommendationParameters parameters}) {
     return _execute(
         () => baseMoviesRemoteDataSource.getRecommendationMovies(parameters));
+  }
+
+//? get genres 
+  @override
+  Future<Either<Failure, List<GenresEntity>>> getGenres() async{
+    try{
+      final result = await baseMoviesRemoteDataSource.getGenres();
+      return Right(result);
+    }on ServerException catch (failure){
+      return Left(ServerFailure(message: failure.errorMessageModel.message));
+    }
+     catch(e){
+      return Left(GeneralFailure(message: e.toString()));
+    }
+
+  }
+  
+  @override
+  Future<Either<Failure, List<MovieEntity>>> getMoviesByGenreId({required String genreId}) async{
+  return await  _getMovies(() => baseMoviesRemoteDataSource.getMoviesByGenreId(genreId: genreId));
+  }
+  
+  @override
+  Future<Either<Failure, List<MovieEntity>>> getMoviesBySearchQuery({required String query}) async{
+    return await _execute(() => baseMoviesRemoteDataSource.getMoviesBySearchQuery(query: query));
   }
 
 }
