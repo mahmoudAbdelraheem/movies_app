@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
-import 'package:movies_app/core/utils/app_constance.dart';
 import 'package:movies_app/movies/domain/entities/movie_entity.dart';
 import 'package:movies_app/movies/presentation/widgets/see_more/movie_card_widget.dart';
 
@@ -29,11 +28,7 @@ class SeeMoreScreen extends StatelessWidget {
           return MovieCardWidget(
             size: size,
             movie: movie,
-            onTap: () {
-              //? go to details screen
-              Navigator.pushNamed(context, AppConstance.movieDetailsScreen,
-                  arguments: movie.id);
-            },
+            
           );
         },
       ),

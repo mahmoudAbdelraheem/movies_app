@@ -15,6 +15,15 @@ import 'package:movies_app/movies/presentation/screens/see_more_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
+    case AppConstance.homeScreen:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => BlocProvider(
+          create: (context) => HomeCubit(),
+          child: const HomeScreen(),
+        ),
+      );
+
     case AppConstance.loginScreen:
       return MaterialPageRoute(
         settings: routeSettings,
@@ -40,27 +49,6 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           child: const SignupScreen(),
         ),
       );
-    case AppConstance.homeScreen:
-      return MaterialPageRoute(
-        settings: routeSettings,
-        builder: (_) => BlocProvider(
-          create: (context) => HomeCubit(),
-          child: const HomeScreen(),
-        ),
-      );
-
-    // case AppConstance.movieScreen:
-    //   //? provide movie bloc on root of movie screen
-    //   return MaterialPageRoute(
-    //     settings: routeSettings,
-    //     builder: (context) => BlocProvider(
-    //       create: (context) => sl<MoviesBloc>()
-    //         ..add(GetNowPlayingMoviesEvent())
-    //         ..add(GetPopularMoviesEvent())
-    //         ..add(GetTopRatedMoviesEvent()),
-    //       child: const MoviesScreen(),
-    //     ),
-    //   );
 
     case AppConstance.movieDetailsScreen:
       int movieID = routeSettings.arguments as int;
@@ -94,10 +82,9 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     default:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) => const Scaffold(
-          body: Center(
-            child: Text('Something went wrong pleas try agin'),
-          ),
+        builder: (_) => BlocProvider(
+          create: (context) => HomeCubit(),
+          child: const HomeScreen(),
         ),
       );
   }

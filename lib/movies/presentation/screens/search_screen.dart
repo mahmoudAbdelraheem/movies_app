@@ -5,6 +5,8 @@ import 'package:movies_app/core/services/service_locator.dart';
 import 'package:movies_app/core/shared/custom_loading_widget.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/movies/presentation/controller/search/search_bloc.dart';
+import 'package:movies_app/movies/presentation/widgets/search/movies_cateogires_items.dart';
+import 'package:movies_app/movies/presentation/widgets/see_more/movie_card_widget.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -15,6 +17,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController searchController = TextEditingController();
+
   @override
   void dispose() {
     searchController.dispose();
@@ -23,97 +26,101 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.sizeOf(context);
+
     return BlocProvider(
       create: (context) => SearchBloc(
         getGenresUsecase: sl(),
         getMoviesByGenresIdUsecase: sl(),
         getMoviesBySearchQuaryUsecase: sl(),
       )..add(GetAllCategoriesEvent()),
-      child: BlocConsumer<SearchBloc, SearchState>(
-        listener: (context, state) {
-            if(state is SearchSuccessState){
-                print(state.movies[0].title);
-            }
-        },
+      child: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
           return SafeArea(
             child: Container(
               color: AppColors.secondaryColor,
               child: ListView(
-                padding: const EdgeInsets.all(20),
                 children: [
                   const SizedBox(height: 10),
-                  CustomTextFormField(
-                    myHintText: 'Search',
-                    myController: searchController,
-                    myIcon: Icons.search,
-                    keyboardType: TextInputType.text,
-                    myValidator: (value) {
-                      if (value!.isEmpty) {
-                        return 'please enter a valid search';
-                      } else {
-                        return null;
-                      }
-                    },
-                    onPressed: () {
-                      //todo implement start search
-                      context.read<SearchBloc>().add(
-                            SearchByMoviesQueryEvent(
-                              query: searchController.text,
-                            ),
-                          );
-                    },
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 10, bottom: 7),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Search By Categories',
-                      style: TextStyle(
-                        color: AppColors.whiteColor,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.start,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: CustomTextFormField(
+                      myHintText: 'Search',
+                      myController: searchController,
+                      myIcon: Icons.search,
+                      keyboardType: TextInputType.text,
+                      myValidator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a valid search';
+                        } else {
+                          return null;
+                        }
+                      },
+                      onPressed: () {
+                        context.read<SearchBloc>().add(
+                              SearchByMoviesQueryEvent(
+                                query: searchController.text,
+                              ),
+                            );
+                      },
                     ),
                   ),
                   BlocBuilder<SearchBloc, SearchState>(
                     builder: (context, state) {
-                      if (state is GetAllCategoriesSuccessState) {
-                        return SizedBox(
-                          height: 40,
-                          child: ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) => Padding(
+                      if (state is GetAllCategoriesSuccessState ||
+                          (state is SearchSuccessState &&
+                              state.showCategories)) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: InkWell(
-                                onTap: () {
-                                  //todo implement start search using category id
-                                  context.read<SearchBloc>().add(
-                                        SearchByMoviesCategoryEvent(
-                                          categoryID: state.categories[index].id
-                                              .toString(),
-                                        ),
-                                      );
-                                  print(state.categories[index].id);
-                                },
-                                child: Chip(
-                                  label: Text(state.categories[index].name),
+                                  const EdgeInsets.only(left: 10, bottom: 7),
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Search By Categories',
+                                style: TextStyle(
+                                  color: AppColors.whiteColor,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
                                 ),
+                                textAlign: TextAlign.start,
                               ),
                             ),
-                            itemCount: state.categories.length,
-                          ),
+                            MoviesCategoriesItems(
+                              categories: state is GetAllCategoriesSuccessState
+                                  ? state.categories
+                                  : (state as SearchSuccessState).categories,
+                            ),
+                          ],
                         );
-                      } else if (state is GetAllCategoriesErrorState) {
-                        return Text(state.message);
                       } else if (state is GetAllCategoriesLoadingState) {
-                        return const Center(child: CustomLoadingWidget());
+                        return CustomLoadingWidget();
+                      } else {
+                        return SizedBox();
                       }
-
-                      return const SizedBox();
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  BlocBuilder<SearchBloc, SearchState>(
+                    builder: (context, state) {
+                      if (state is SearchSuccessState) {
+                        return ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return MovieCardWidget(
+                              size: screenSize,
+                              movie: state.movies[index],
+                            );
+                          },
+                          itemCount: state.movies.length,
+                        );
+                      } else if (state is SearchLoadingState) {
+                        return CustomLoadingWidget();
+                      } else {
+                        return SizedBox();
+                      }
                     },
                   ),
                 ],
